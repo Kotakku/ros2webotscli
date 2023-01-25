@@ -9,3 +9,6 @@ Run `ros2 webots run` for run webots.
 
 Run `ros2 webots --help` for more information on individual command usage.
 
+### Example
+
+`ros2 webots pkg_create my_robot_driver MyRobotDriver --dependencies geometry_msgs`
