@@ -11,12 +11,16 @@ jobs:
     container:
       image: ubuntu:jammy
     steps:
-      - name: Build
-      - uses: actions/checkout@v3
+      - name: checkout
+        uses: actions/checkout@v3
         with:
           path: src
-      - uses: ros-tooling/setup-ros@v0.5
+      
+      - name: setup
+        uses: ros-tooling/setup-ros@v0.5
         with:
           required-ros-distributions: humble
-        runs: |
+
+      - name: build
+        run: |
           colcon build --symlink-install
