@@ -1,3 +1,5 @@
+[![build](https://github.com/Kotakku/ros2webotscli/actions/workflows/build.yaml/badge.svg)](https://github.com/Kotakku/ros2webotscli/actions/workflows/build.yaml)
+
 # ros2webotscli
 ROS 2 command line interface tools for ROS 2 + Webots
 
