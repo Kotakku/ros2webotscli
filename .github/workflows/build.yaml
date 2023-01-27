@@ -6,10 +6,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_docker:
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ros_distribution: [foxy, galactic, humble]
+        include:
+          - docker_image: ubuntu:focal
+            ros_distribution: foxy
+          - docker_image: ubuntu:focal
+            ros_distribution: galactic
+          - docker_image: ubuntu:jammy
+            ros_distribution: humble
     container:
-      image: ubuntu:jammy
+      image: ${{ matrix.docker_image }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -19,7 +29,7 @@ jobs:
       - name: setup
         uses: ros-tooling/setup-ros@v0.5
         with:
-          required-ros-distributions: humble
+          required-ros-distributions: ${{ matrix.ros_distribution }}
 
       - name: build
         run: |
