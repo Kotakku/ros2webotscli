@@ -10,11 +10,11 @@ from webots_ros2_driver.utils import controller_url_prefix
 def generate_launch_description():
     # params
     package_name = '@(package_name)'
-    urdf_file = os.path.join(package_dir, 'resource', 'my_robot.urdf')
-    wdt_file = os.path.join(package_dir, 'worlds', 'my_world.wbt')
+    package_dir = get_package_share_directory(package_name)
+    urdf_file = os.path.join(package_dir, 'resource', 'robot.urdf')
+    wdt_file = os.path.join(package_dir, 'worlds', 'world.wbt')
     robot_name = 'my_robot'
 
-    package_dir = get_package_share_directory(package_name)
     robot_description = pathlib.Path(urdf_file).read_text()
 
     webots = WebotsLauncher(

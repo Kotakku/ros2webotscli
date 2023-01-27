@@ -105,3 +105,23 @@ def populate_launch(package, launch_directory):
         launch_directory,
         'webots.launch.py',
         launch_config)
+
+def populate_urdf(package, cpp_class_name, resource_directory):
+    urdf_config = {
+        'package_name': package.name,
+        'class_name': cpp_class_name,
+    }
+    _create_template_file(
+        'xml',
+        'robot.urdf.em',
+        resource_directory,
+        'robot.urdf',
+        urdf_config)
+
+def populate_world(world_diectory):
+    _create_template_file(
+        'xml',
+        'world.wbt.em',
+        world_diectory,
+        'world.wbt',
+        {})

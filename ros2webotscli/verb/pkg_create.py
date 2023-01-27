@@ -16,7 +16,9 @@ from ros2webotscli.api.create import (create_package_environment,
                                         populate_plugin_description_xml,
                                         populate_cpp_library,
                                         create_resource_folder,
-                                        populate_launch)
+                                        populate_launch,
+                                        populate_urdf,
+                                        populate_world)
 
 class PkgCreateVerb(VerbExtension):
     """Create ROS2 + Webots plugin template package."""
@@ -179,10 +181,15 @@ class PkgCreateVerb(VerbExtension):
             )
 
             # create folders
-            launch_directory, _, _ = create_resource_folder(package, args.destination_directory)
+            launch_directory, worlds_directory, resource_directory = create_resource_folder(package, args.destination_directory)
 
             # generate launch.py
             populate_launch(package, launch_directory) 
+
+            # generate robot.urdf
+            populate_urdf(package, args.class_name, resource_directory)
+
+            populate_world(worlds_directory)
 
         # if args.build_type == 'ament_python':
         #     if not source_directory:
