@@ -11,10 +11,12 @@ from catkin_pkg.package import Person
 
 from ros2cli.verb import VerbExtension
 
-from ros2webotscli.api.create import create_package_environment
-from ros2webotscli.api.create import populate_ament_cmake
-from ros2webotscli.api.create import populate_plugin_description_xml
-from ros2webotscli.api.create import populate_cpp_library
+from ros2webotscli.api.create import (create_package_environment,
+                                        populate_ament_cmake,
+                                        populate_plugin_description_xml,
+                                        populate_cpp_library,
+                                        create_resource_folder,
+                                        populate_launch)
 
 class PkgCreateVerb(VerbExtension):
     """Create ROS2 + Webots plugin template package."""
@@ -175,7 +177,13 @@ class PkgCreateVerb(VerbExtension):
                 include_directory,
                 args.class_name
             )
-        
+
+            # create folders
+            launch_directory, _, _ = create_resource_folder(package, args.destination_directory)
+
+            # generate launch.py
+            populate_launch(package, launch_directory) 
+
         # if args.build_type == 'ament_python':
         #     if not source_directory:
         #         return 'unable to create source folder in ' + args.destination_directory

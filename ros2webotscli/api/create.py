@@ -9,17 +9,7 @@ except ModuleNotFoundError:
     import importlib_resources
 
 import ros2pkg
-# from ros2pkg.api.create import create_package_environment
-# from ros2pkg.api.create import populate_ament_cmake
-# from ros2pkg.api.create import populate_ament_python
-# from ros2pkg.api.create import populate_cmake
-# from ros2pkg.api.create import populate_cpp_library
-# from ros2pkg.api.create import populate_cpp_node
-# from ros2pkg.api.create import populate_python_libary
-# from ros2pkg.api.create import populate_python_node
-
-
-from ros2pkg.api.create import _expand_template
+from ros2pkg.api.create import (_expand_template, _create_folder)
 
 def _create_template_file(
     template_subdir, template_file_name, output_directory, output_file_name, template_config
@@ -38,6 +28,14 @@ def _create_template_file(
 
 def create_package_environment(package, destination_directory):
     return ros2pkg.api.create.create_package_environment(package, destination_directory)
+
+
+def create_resource_folder(package, destination_directory):
+    pkg_dir = os.path.join(destination_directory, package.name)
+    launch_directory = ros2pkg.api.create._create_folder("launch", pkg_dir)
+    worlds_directory = ros2pkg.api.create._create_folder("worlds", pkg_dir)
+    resource_directory = ros2pkg.api.create._create_folder("resource", pkg_dir)
+    return launch_directory, worlds_directory, resource_directory
 
 def populate_ament_cmake(package, package_directory):
     cmakelists_config = {
@@ -96,3 +94,14 @@ def populate_cpp_library(package, source_directory, include_directory, cpp_class
         include_directory,
         'visibility_control.h',
         visibility_config)
+
+def populate_launch(package, launch_directory):
+    launch_config = {
+        'package_name': package.name,
+    }
+    _create_template_file(
+        'py',
+        'launch.py.em',
+        launch_directory,
+        'webots.launch.py',
+        launch_config)

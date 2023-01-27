@@ -21,9 +21,9 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNC
 pluginlib_export_plugin_description_file(webots_ros2_driver @(package_name).xml)
 
 install(DIRECTORY
-  # launch
-  # resource
-  # worlds
+  launch
+  resource
+  worlds
   DESTINATION share/${PROJECT_NAME}/
 )
 
