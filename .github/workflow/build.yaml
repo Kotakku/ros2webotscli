@@ -1,0 +1,22 @@
+name: build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build_docker:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:jammy
+    steps:
+      - name: Build
+      - uses: actions/checkout@v3
+        with:
+          path: src
+      - uses: ros-tooling/setup-ros@v0.5
+        with:
+          required-ros-distributions: humble
+        runs: |
+          colcon build --symlink-install
